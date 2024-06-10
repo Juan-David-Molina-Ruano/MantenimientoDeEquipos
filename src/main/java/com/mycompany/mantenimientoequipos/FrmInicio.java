@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.mantenimientoequipos;
+import equipos.FrmEquiposLec;
 import javax.swing.JFrame;
 
 /**
@@ -32,7 +33,8 @@ public class FrmInicio extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenMantenimientos = new javax.swing.JMenu();
-        jMenMante = new javax.swing.JMenuItem();
+        jMenManteEqui = new javax.swing.JMenuItem();
+        jMenEqui = new javax.swing.JMenuItem();
         jMeCerrar = new javax.swing.JMenu();
 
         jMenu1.setText("jMenu1");
@@ -44,13 +46,21 @@ public class FrmInicio extends javax.swing.JFrame {
 
         jMenMantenimientos.setText("Mantenimiento");
 
-        jMenMante.setText("Mantenimientos");
-        jMenMante.addActionListener(new java.awt.event.ActionListener() {
+        jMenManteEqui.setText("Mantenimientos");
+        jMenManteEqui.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenManteActionPerformed(evt);
+                jMenManteEquiActionPerformed(evt);
             }
         });
-        jMenMantenimientos.add(jMenMante);
+        jMenMantenimientos.add(jMenManteEqui);
+
+        jMenEqui.setText("Equipos");
+        jMenEqui.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenEquiActionPerformed(evt);
+            }
+        });
+        jMenMantenimientos.add(jMenEqui);
 
         jMenuBar1.add(jMenMantenimientos);
 
@@ -78,16 +88,22 @@ public class FrmInicio extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenManteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenManteActionPerformed
+    private void jMenManteEquiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenManteEquiActionPerformed
         // TODO add your handling code here:
         FrmManteLec frmManteLec = new FrmManteLec();
         frmManteLec.setVisible(true);
-    }//GEN-LAST:event_jMenManteActionPerformed
+    }//GEN-LAST:event_jMenManteEquiActionPerformed
 
     private void jMeCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMeCerrarMouseClicked
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jMeCerrarMouseClicked
+
+    private void jMenEquiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenEquiActionPerformed
+        // TODO add your handling code here:
+        FrmEquiposLec frmEquiposLec = new FrmEquiposLec();
+        frmEquiposLec.setVisible(true);
+    }//GEN-LAST:event_jMenEquiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,7 +142,8 @@ public class FrmInicio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMeCerrar;
-    private javax.swing.JMenuItem jMenMante;
+    private javax.swing.JMenuItem jMenEqui;
+    private javax.swing.JMenuItem jMenManteEqui;
     private javax.swing.JMenu jMenMantenimientos;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

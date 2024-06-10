@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.mantenimientoequipos;
+package equipos;
 
 import utilerias.OpcionesCRUD;
 
@@ -10,13 +10,14 @@ import utilerias.OpcionesCRUD;
  *
  * @author juand
  */
-public class FrmManteLec extends javax.swing.JFrame {
-    
-    private  OpcionesCRUD opcionCRUD;
+public class FrmEquiposLec extends javax.swing.JFrame {
+
+    private OpcionesCRUD opcionCRUD;
+
     /**
-     * Creates new form FrmManteLec
+     * Creates new form FrmEquiposLec
      */
-    public FrmManteLec() {
+    public FrmEquiposLec() {
         initComponents();
     }
 
@@ -29,21 +30,17 @@ public class FrmManteLec extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jTxtNombre = new javax.swing.JTextField();
-        jBtnBuscar = new javax.swing.JButton();
         jBtnCrear = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableMante = new javax.swing.JTable();
+        jTableEqui = new javax.swing.JTable();
         jBtnEditar = new javax.swing.JButton();
         jBtnEliminar = new javax.swing.JButton();
         jBtnCancelar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jTxtNombre = new javax.swing.JTextField();
+        jBtnBuscar = new javax.swing.JButton();
 
-        setTitle("Ver Mantenimientos");
-
-        jLabel1.setText("Nombre");
-
-        jBtnBuscar.setText("Buscar");
+        setTitle("Equipos");
 
         jBtnCrear.setText("Crear");
         jBtnCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -52,7 +49,7 @@ public class FrmManteLec extends javax.swing.JFrame {
             }
         });
 
-        jTableMante.setModel(new javax.swing.table.DefaultTableModel(
+        jTableEqui.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -63,7 +60,7 @@ public class FrmManteLec extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTableMante);
+        jScrollPane1.setViewportView(jTableEqui);
 
         jBtnEditar.setText("Editar");
         jBtnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -86,12 +83,16 @@ public class FrmManteLec extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Nombre");
+
+        jBtnBuscar.setText("Buscar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jBtnEditar)
@@ -108,12 +109,12 @@ public class FrmManteLec extends javax.swing.JFrame {
                         .addComponent(jBtnBuscar)
                         .addGap(18, 18, 18)
                         .addComponent(jBtnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -136,31 +137,31 @@ public class FrmManteLec extends javax.swing.JFrame {
     private void jBtnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCrearActionPerformed
         // TODO add your handling code here:
         opcionCRUD = OpcionesCRUD.CREAR;
-        FrmManteEsc frmManteEsc = new FrmManteEsc(opcionCRUD);
-        frmManteEsc.setTitle("Crear Mantenimiento");
-        frmManteEsc.setVisible(true);
+        FrmEquiposEsc frmEquiposEsc = new FrmEquiposEsc(opcionCRUD);
+        frmEquiposEsc.setTitle("Crear Equipo");
+        frmEquiposEsc.setVisible(true);
     }//GEN-LAST:event_jBtnCrearActionPerformed
-
-    private void jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelarActionPerformed
-        // TODO add your handling code here:
-        this.setVisible(false);
-    }//GEN-LAST:event_jBtnCancelarActionPerformed
 
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
         // TODO add your handling code here:
         opcionCRUD = OpcionesCRUD.MODIFICAR;
-        FrmManteEsc frmManteEsc = new FrmManteEsc(opcionCRUD);
-        frmManteEsc.setTitle("Modificar Mantenimiento");
-        frmManteEsc.setVisible(true);
+        FrmEquiposEsc frmEquiposEsc = new FrmEquiposEsc(opcionCRUD);
+        frmEquiposEsc.setTitle("Modificar Equipo");
+        frmEquiposEsc.setVisible(true);
     }//GEN-LAST:event_jBtnEditarActionPerformed
 
     private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed
         // TODO add your handling code here:
         opcionCRUD = OpcionesCRUD.ELIMINAR;
-         FrmManteEsc frmManteEsc = new FrmManteEsc(opcionCRUD);
-        frmManteEsc.setTitle("Eliminar Mantenimiento");
-        frmManteEsc.setVisible(true);
+        FrmEquiposEsc frmEquiposEsc = new FrmEquiposEsc(opcionCRUD);
+        frmEquiposEsc.setTitle("Eliminar Equipo");
+        frmEquiposEsc.setVisible(true);
     }//GEN-LAST:event_jBtnEliminarActionPerformed
+
+    private void jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelarActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jBtnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,20 +180,20 @@ public class FrmManteLec extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmManteLec.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEquiposLec.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmManteLec.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEquiposLec.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmManteLec.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEquiposLec.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmManteLec.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmEquiposLec.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmManteLec().setVisible(true);
+                new FrmEquiposLec().setVisible(true);
             }
         });
     }
@@ -205,7 +206,7 @@ public class FrmManteLec extends javax.swing.JFrame {
     private javax.swing.JButton jBtnEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableMante;
+    private javax.swing.JTable jTableEqui;
     private javax.swing.JTextField jTxtNombre;
     // End of variables declaration//GEN-END:variables
 }
