@@ -4,10 +4,84 @@
  */
 package entidades;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 /**
  *
  * @author juand
  */
 public class Equipo {
-    
+    private int equipoId;
+    private String numeroSerie;
+    private String marca;
+    private String modelo;
+    private String fechaAdqui;
+    private String ubicacion;
+
+    public Equipo() {
+    }
+
+    public Equipo(int equipoId, String numeroSerie, String marca, String modelo, String fechaAdqui, String ubicacion) {
+        this.equipoId = equipoId;
+        this.numeroSerie = numeroSerie;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.fechaAdqui = fechaAdqui;
+        this.ubicacion = ubicacion;
+    }
+
+    public int getEquipoId() {
+        return equipoId;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public void setEquipoId(int equipoId) {
+        this.equipoId = equipoId;
+    }
+
+    public String getNumeroSerie() {
+        return numeroSerie;
+    }
+
+    public void setNumeroSerie(String numeroSerie) {
+        this.numeroSerie = numeroSerie;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public String getFechaAdqui() {
+        return fechaAdqui;
+    }
+
+    public void setFechaAdqui(String fechaAdqui) {
+        this.fechaAdqui = fechaAdqui;
+    }
+
+    public String getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
+    @Override
+    public String toString(){
+        return  modelo;
+    }
 }

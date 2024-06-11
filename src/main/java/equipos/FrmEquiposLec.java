@@ -4,7 +4,16 @@
  */
 package equipos;
 
+import accesodatos.EquipoDAL;
+import entidades.Equipo;
 import utilerias.OpcionesCRUD;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -86,6 +95,11 @@ public class FrmEquiposLec extends javax.swing.JFrame {
         jLabel1.setText("Nombre");
 
         jBtnBuscar.setText("Buscar");
+        jBtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -137,31 +151,65 @@ public class FrmEquiposLec extends javax.swing.JFrame {
     private void jBtnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCrearActionPerformed
         // TODO add your handling code here:
         opcionCRUD = OpcionesCRUD.CREAR;
-        FrmEquiposEsc frmEquiposEsc = new FrmEquiposEsc(opcionCRUD);
+        FrmEquiposEsc frmEquiposEsc = new FrmEquiposEsc(opcionCRUD, new Equipo());
         frmEquiposEsc.setTitle("Crear Equipo");
         frmEquiposEsc.setVisible(true);
     }//GEN-LAST:event_jBtnCrearActionPerformed
 
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
         // TODO add your handling code here:
-        opcionCRUD = OpcionesCRUD.MODIFICAR;
-        FrmEquiposEsc frmEquiposEsc = new FrmEquiposEsc(opcionCRUD);
-        frmEquiposEsc.setTitle("Modificar Equipo");
-        frmEquiposEsc.setVisible(true);
+        int row = jTableEqui.getSelectedRow();
+        if (row != -1) {
+            opcionCRUD = OpcionesCRUD.MODIFICAR;
+            FrmEquiposEsc frmEquiposEsc = new FrmEquiposEsc(opcionCRUD, obtenerDatos());
+            frmEquiposEsc.setTitle("Modificar producto");
+            frmEquiposEsc.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccionar una fila", "Equipo",
+                    JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jBtnEditarActionPerformed
 
     private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed
         // TODO add your handling code here:
-        opcionCRUD = OpcionesCRUD.ELIMINAR;
-        FrmEquiposEsc frmEquiposEsc = new FrmEquiposEsc(opcionCRUD);
-        frmEquiposEsc.setTitle("Eliminar Equipo");
-        frmEquiposEsc.setVisible(true);
+        int row = jTableEqui.getSelectedRow();
+        if (row != -1) {
+            opcionCRUD = OpcionesCRUD.ELIMINAR;
+            FrmEquiposEsc frmEquiposEsc = new FrmEquiposEsc(opcionCRUD, obtenerDatos());
+            frmEquiposEsc.setTitle("Eliminar producto");
+            frmEquiposEsc.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccionar una fila", "Equipo",
+                    JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jBtnEliminarActionPerformed
 
     private void jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
     }//GEN-LAST:event_jBtnCancelarActionPerformed
+
+    private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
+        // TODO add your handling code here:
+        Equipo equipo = new Equipo();
+        equipo.setModelo(jTxtNombre.getText());
+        ArrayList<Equipo> equipos = EquipoDAL.buscar(equipo);
+        String[] columnas = {"ID Equipo","NumeroSerie", "Marca", "Modelo", "FechaAdquisicion","Ubicacion"};
+        Object[][] datos = new Object[equipos.size()][6];
+        for (int i = 0; i < equipos.size(); i++) {
+            Equipo item = equipos.get(i);
+            datos[i][0] = item.getEquipoId();
+            datos[i][1] = item.getNumeroSerie();
+            datos[i][2] = item.getMarca();
+            datos[i][3] = item.getModelo();
+            datos[i][4] = item.getFechaAdqui();
+            datos[i][5] = item.getUbicacion();
+        }
+        DefaultTableModel modelTable = new DefaultTableModel(datos, columnas);
+        jTableEqui.setModel(modelTable);
+    }//GEN-LAST:event_jBtnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,6 +244,20 @@ public class FrmEquiposLec extends javax.swing.JFrame {
                 new FrmEquiposLec().setVisible(true);
             }
         });
+    }
+
+    //OBTENER DATOS
+    private Equipo obtenerDatos() {
+        Equipo equipo = new Equipo();
+        int row = jTableEqui.getSelectedRow();
+        equipo.setEquipoId((int) jTableEqui.getValueAt(row, 0));
+        equipo.setNumeroSerie(jTableEqui.getValueAt(row, 1).toString());
+        equipo.setMarca(jTableEqui.getValueAt(row, 2).toString());
+        equipo.setModelo(jTableEqui.getValueAt(row, 3).toString());
+        equipo.setFechaAdqui(jTableEqui.getValueAt(row, 4).toString());
+        equipo.setUbicacion(jTableEqui.getValueAt(row, 5).toString());
+
+        return equipo;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
