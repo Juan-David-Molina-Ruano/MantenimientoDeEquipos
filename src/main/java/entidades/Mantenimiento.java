@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Mantenimiento {
     private  int mantenimientoId;
-    private Date fecha;
+    private String fecha;
     private String descripcion;
     private double costo;
     private String tipoMantenimiento;
@@ -15,7 +15,7 @@ public class Mantenimiento {
     public Mantenimiento() {
     }
 
-    public Mantenimiento(int mantenimientoId, Date fecha, String descripcion, String tipoMantenimiento, double costo, int equipoId, Equipo equipo) {
+    public Mantenimiento(int mantenimientoId, String fecha, String descripcion, String tipoMantenimiento, double costo, int equipoId, Equipo equipo) {
         this.mantenimientoId = mantenimientoId;
         this.fecha = fecha;
         this.descripcion = descripcion;
@@ -33,11 +33,11 @@ public class Mantenimiento {
         this.mantenimientoId = mantenimientoId;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 

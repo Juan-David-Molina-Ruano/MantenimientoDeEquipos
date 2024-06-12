@@ -4,8 +4,18 @@
  */
 package com.mycompany.mantenimientoequipos;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
+
+import accesodatos.EquipoDAL;
+import accesodatos.MantenimientoDAL;
+import entidades.Equipo;
+import entidades.Mantenimiento;
 import utilerias.OpcionesCRUD;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -14,15 +24,156 @@ import utilerias.OpcionesCRUD;
 public class FrmManteEsc extends javax.swing.JFrame {
 
     private OpcionesCRUD opcionCRUD;
+    private Mantenimiento mantenimientoActual = new Mantenimiento();
+    private HashMap<Integer, Equipo> mapEquipos = new HashMap<Integer, Equipo>();
+
 
     /**
      * Creates new form FrmManteEsc
      */
-    public FrmManteEsc(OpcionesCRUD opcion) {
+    public FrmManteEsc(OpcionesCRUD opcion,Mantenimiento mantenimiento) {
         this.opcionCRUD = opcion;
         initComponents();
+        ArrayList<Equipo> equipos = EquipoDAL.obtenerTodos();
+        DefaultComboBoxModel<String> modelCombox = new DefaultComboBoxModel(equipos.toArray());
+        for (Equipo eq : equipos) {
+            mapEquipos.put(eq.getEquipoId(), eq);
+        }
+        jComboEquipos.setModel(modelCombox);
+        if (opcion != OpcionesCRUD.CREAR) {
+            asingarDatos(mantenimiento);
+            mantenimientoActual = mantenimiento;
+        }
+
     }
 
+    private Mantenimiento obtenerDatos() {
+        Mantenimiento mantenimiento = new Mantenimiento();
+        mantenimiento.setFecha(jTxtFecha.getText());
+        mantenimiento.setDescripcion(jTxtADesc.getText());
+        mantenimiento.setCosto(Double.parseDouble(jTxtCosto.getText()));
+        Equipo equipo = (Equipo) jComboEquipos.getSelectedItem();
+        mantenimiento.setEquipoId(equipo.getEquipoId());
+        mantenimiento.setMantenimientoId(mantenimientoActual.getMantenimientoId());
+        return mantenimiento;
+    }
+
+    private boolean validDatos() {
+        boolean valid = true;
+        String errorMessage = null;
+        String errorField = null;
+
+        for (int i = 0; i < 4; i++) {
+            switch (i) {
+                case 0:
+                    if (jTxtFecha.getText().isEmpty()) {
+                        valid = false;
+                        errorMessage = "La fecha es obligatoria";
+                        errorField = "Validar campo";
+                    }
+                    break;
+                case 1:
+                    if (jTxtADesc.getText().isEmpty()) {
+                        valid = false;
+                        errorMessage = "La descripcion es obligatoria";
+                        errorField = "Validar campo";
+                    }
+                    break;
+                case 2:
+                    if (jTxtCosto.getText().isEmpty()) {
+                        valid = false;
+                        errorMessage = "El costo es obligatorio";
+                        errorField = "Validar campo";
+                    }
+                    break;
+                case 3:
+                    if (jTxtTipoMante.getText().isEmpty()) {
+                        valid = false;
+                        errorMessage = "El tipo de mantenimiento es obligatorio";
+                        errorField = "Validar campo";
+                    }
+                    break;
+            }
+            if (!valid) {
+                JOptionPane.showMessageDialog(this, errorMessage, errorField, JOptionPane.WARNING_MESSAGE);
+                break;
+            }
+        }
+
+        return valid;
+    }
+
+    private void asingarDatos(Mantenimiento mantenimiento) {
+        jTxtFecha.setText(mantenimiento.getFecha());
+        jTxtADesc.setText(mantenimiento.getDescripcion());
+        jTxtTipoMante.setText(mantenimiento.getTipoMantenimiento());
+        jTxtCosto.setText(Double.toString(mantenimiento.getCosto()));
+        Equipo equipo = mapEquipos.get(mantenimiento.getEquipoId());
+        jComboEquipos.setSelectedItem(equipo);
+    }
+
+    private void crearReg() {
+        try {
+            Mantenimiento mantenimiento = obtenerDatos();
+            int result = MantenimientoDAL.crear(mantenimiento);
+            if (result > 0) {
+                JOptionPane.showMessageDialog(this,
+                        "El mantenimiento fue registrado existosamente", "CREAR MANTENIMIENTO",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Sucedio un error al crear el mantenimiento", "ERROR MANTENIMIENTO",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(), "ERROR MANTENIMIENTO",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    private void modificarReg() {
+        try {
+            Mantenimiento mantenimiento = obtenerDatos();
+            int result = MantenimientoDAL.modificar(mantenimiento);
+            if (result > 0) {
+                JOptionPane.showMessageDialog(this,
+                        "El mantenimiento fue modificado existosamente", "MODIFICAR MANTENIMIENTO",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Sucedio un error al modificar el mantenimiento", "ERROR MANTENIMIENTO",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(), "ERROR MANTENIMIENTO",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    private void eliminarReg() {
+        try {
+            Mantenimiento mantenimiento = obtenerDatos();
+            int result = MantenimientoDAL.eliminar(mantenimiento);
+            if (result > 0) {
+                JOptionPane.showMessageDialog(this,
+                        "El mantenimiento fue eliminado existosamente", "ELIMINAR MANTENIMIENTO",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Sucedio un error al eliminar el mantenimiento", "ERROR MANTENIMIENTO",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(), "ERROR MANTENIMIENTO",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,13 +191,14 @@ public class FrmManteEsc extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTxtTipoMante = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jComboEquipos = new javax.swing.JComboBox<>();
+        jComboEquipos = new JComboBox<String>();
         jBtnGuardar = new javax.swing.JButton();
         JBtnCancelar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTxtADesc = new javax.swing.JTextArea();
 
         setTitle("Crear Mantenimiento");
+
 
         jLabel1.setText("Fecha");
 
@@ -58,7 +210,7 @@ public class FrmManteEsc extends javax.swing.JFrame {
 
         jLabel5.setText("Equipo");
 
-        jComboEquipos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboEquipos.setModel(new DefaultComboBoxModel<String>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jBtnGuardar.setText("Guardar");
         jBtnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -149,22 +301,24 @@ public class FrmManteEsc extends javax.swing.JFrame {
     }//GEN-LAST:event_JBtnCancelarActionPerformed
 
     private void jBtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGuardarActionPerformed
-        if (null != opcionCRUD) // TODO add your handling code here:
-            switch (opcionCRUD) {
-                case CREAR:
-                    JOptionPane.showMessageDialog(this, "Guardar Registros", "Guardar", JOptionPane.INFORMATION_MESSAGE);
-                    this.setVisible(false);
-                    break;
-                case MODIFICAR:
-                    JOptionPane.showMessageDialog(this, "Modificar Registros", "Modificar", JOptionPane.INFORMATION_MESSAGE);
-                    this.setVisible(false);
-                    break;
-                case ELIMINAR:
-                    JOptionPane.showMessageDialog(this, "Eliminar Registros", "Eliminar", JOptionPane.INFORMATION_MESSAGE);
-                    this.setVisible(false);
-                    break;
-                default:
-                    break;
+         if (null != opcionCRUD) // TODO add your handling code here:
+            if (validDatos()) {
+                switch (opcionCRUD) {
+                    case CREAR:
+                        crearReg();
+                        this.setVisible(false);
+                        break;
+                    case MODIFICAR:
+                        modificarReg();
+                        this.setVisible(false);
+                        break;
+                    case ELIMINAR:
+                        eliminarReg();
+                        this.setVisible(false);
+                        break;
+                    default:
+                        break;
+                }
             }
     }//GEN-LAST:event_jBtnGuardarActionPerformed
 
@@ -175,7 +329,7 @@ public class FrmManteEsc extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBtnCancelar;
     private javax.swing.JButton jBtnGuardar;
-    private javax.swing.JComboBox<String> jComboEquipos;
+    private JComboBox<String> jComboEquipos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -105,4 +105,31 @@ public class EquipoDAL {
         }
         return equipos;
     }
+
+    //OBTENER TODOS
+    public static ArrayList<Equipo> obtenerTodos() {
+        ArrayList<Equipo> equipos = new ArrayList<>();
+        try (Connection conn = ComunDB.obtenerConexion()) {
+            String sql = "SELECT EquipoID, NumeroSerie, Marca, Modelo, FechaAdquisicion, Ubicacion FROM Equipos";
+            try (PreparedStatement statement = conn.prepareStatement(sql)) {
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        int equipoId = resultSet.getInt("EquipoID");
+                        String numeroSerie = resultSet.getString("NumeroSerie");
+                        String marca = resultSet.getString("Marca");
+                        String modelo = resultSet.getString("Modelo");
+                        String fechaAdquisicion = resultSet.getString("FechaAdquisicion");
+                        String ubicacion = resultSet.getString("Ubicacion");
+                        Equipo equipo = new Equipo(equipoId,numeroSerie,marca,modelo,fechaAdquisicion,ubicacion);
+                        equipos.add(equipo);
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException("Error al obtener los equipos", e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al obtener la conexión a la base de datos", e);
+        }
+        return equipos;
+    }
 }

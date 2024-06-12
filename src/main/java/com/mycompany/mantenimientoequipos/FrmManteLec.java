@@ -4,7 +4,11 @@
  */
 package com.mycompany.mantenimientoequipos;
 
+import entidades.Equipo;
+import entidades.Mantenimiento;
 import utilerias.OpcionesCRUD;
+
+import javax.swing.*;
 
 /**
  *
@@ -136,7 +140,7 @@ public class FrmManteLec extends javax.swing.JFrame {
     private void jBtnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCrearActionPerformed
         // TODO add your handling code here:
         opcionCRUD = OpcionesCRUD.CREAR;
-        FrmManteEsc frmManteEsc = new FrmManteEsc(opcionCRUD);
+        FrmManteEsc frmManteEsc = new FrmManteEsc(opcionCRUD, new Mantenimiento());
         frmManteEsc.setTitle("Crear Mantenimiento");
         frmManteEsc.setVisible(true);
     }//GEN-LAST:event_jBtnCrearActionPerformed
@@ -146,20 +150,51 @@ public class FrmManteLec extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jBtnCancelarActionPerformed
 
+    private Mantenimiento obtenerDatos() {
+        Mantenimiento mantenimiento = new Mantenimiento();
+        int row = jTableMante.getSelectedRow();
+        mantenimiento.setMantenimientoId((int) jTableMante.getValueAt(row, 0));
+        mantenimiento.setFecha(jTableMante.getValueAt(row, 1).toString());
+        mantenimiento.setDescripcion(jTableMante.getValueAt(row, 2).toString());
+        mantenimiento.setCosto((double) jTableMante.getValueAt(row, 3));
+        mantenimiento.setTipoMantenimiento(jTableMante.getValueAt(row, 4).toString());
+        mantenimiento.setEquipoId((int) jTableMante.getValueAt(row, 5));
+
+        Equipo equipo= new Equipo();
+        equipo.setModelo(jTableMante.getValueAt(row, 6).toString());
+        equipo.setEquipoId((int)jTableMante.getValueAt(row, 7));
+        mantenimiento.setEquipo(equipo);
+        return mantenimiento;
+    }
+
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
         // TODO add your handling code here:
-        opcionCRUD = OpcionesCRUD.MODIFICAR;
-        FrmManteEsc frmManteEsc = new FrmManteEsc(opcionCRUD);
-        frmManteEsc.setTitle("Modificar Mantenimiento");
-        frmManteEsc.setVisible(true);
+        int row = jTableMante.getSelectedRow();
+        if (row != -1) {
+            opcionCRUD = OpcionesCRUD.MODIFICAR;
+            FrmManteEsc frmManteEsc = new FrmManteEsc(opcionCRUD, obtenerDatos());
+            frmManteEsc.setTitle("Modificar mantenimiento");
+            frmManteEsc.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccionar una fila", "Mantenimiento",
+                    JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jBtnEditarActionPerformed
 
     private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed
         // TODO add your handling code here:
-        opcionCRUD = OpcionesCRUD.ELIMINAR;
-         FrmManteEsc frmManteEsc = new FrmManteEsc(opcionCRUD);
-        frmManteEsc.setTitle("Eliminar Mantenimiento");
-        frmManteEsc.setVisible(true);
+        int row = jTableMante.getSelectedRow();
+        if (row != -1) {
+            opcionCRUD = OpcionesCRUD.ELIMINAR;
+            FrmManteEsc frmManteEsc = new FrmManteEsc(opcionCRUD, obtenerDatos());
+            frmManteEsc.setTitle("Eliminar Mantenimiento");
+            frmManteEsc.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccionar una fila", "Mantenimiento",
+                    JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jBtnEliminarActionPerformed
 
     /**
